@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="2dTextBattleRoyale"
+config/name="Text Hero"
+config/description=" A ZPG(zero player game) where you watch your hero's journey with minimal intervention. Inspired by mobile game of the same genre \"godville\"."
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 config/icon="res://icon.svg"
