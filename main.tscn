@@ -1,0 +1,183 @@
+[gd_scene load_steps=8 format=3 uid="uid://wighp2yk2vtk"]
+
+[ext_resource type="Script" path="res://CombatButtons.gd" id="1_hml4h"]
+[ext_resource type="Script" path="res://OptionButton.gd" id="1_j0hxn"]
+[ext_resource type="Script" path="res://ItemButton.gd" id="2_pimro"]
+[ext_resource type="Script" path="res://Enemy.gd" id="3_ekmna"]
+[ext_resource type="Script" path="res://Progress.gd" id="6_7ibku"]
+[ext_resource type="Script" path="res://Player.gd" id="6_yuhiw"]
+[ext_resource type="Script" path="res://EventManager.gd" id="7_hak32"]
+
+[node name="Scene" type="Node"]
+
+[node name="UI" type="Control" parent="."]
+custom_minimum_size = Vector2(320, 640)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -320.0
+offset_right = 160.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Progress" type="Control" parent="UI"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("6_7ibku")
+
+[node name="LogDisplay" type="RichTextLabel" parent="UI/Progress"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+fit_content = true
+scroll_following = true
+autowrap_mode = 1
+shortcut_keys_enabled = false
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/Progress"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 1.0
+
+[node name="Timer" type="Timer" parent="UI/Progress"]
+wait_time = 0.1
+
+[node name="CombatButtons" type="Control" parent="UI"]
+custom_minimum_size = Vector2(0, 300)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_hml4h")
+metadata/_edit_group_ = true
+
+[node name="ButtonList" type="VBoxContainer" parent="UI/CombatButtons"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -136.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 2
+
+[node name="AttackButton" type="Button" parent="UI/CombatButtons/ButtonList"]
+layout_mode = 2
+focus_mode = 0
+text = "Attack"
+
+[node name="EscapeButton" type="Button" parent="UI/CombatButtons/ButtonList"]
+layout_mode = 2
+focus_mode = 0
+text = "Escape"
+
+[node name="DefendButton" type="Button" parent="UI/CombatButtons/ButtonList"]
+layout_mode = 2
+focus_mode = 0
+text = "Defend"
+
+[node name="ItemButton" type="MenuButton" parent="UI/CombatButtons/ButtonList"]
+layout_mode = 2
+text = "Items"
+flat = false
+script = ExtResource("2_pimro")
+
+[node name="ReSpawnButton" type="Button" parent="UI/CombatButtons"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Respawn"
+
+[node name="XPButton" type="Button" parent="UI/CombatButtons"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Give XP"
+
+[node name="OptionButton" type="MenuButton" parent="UI"]
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 31.0
+text = "Menu"
+flat = false
+item_count = 3
+popup/item_0/text = "Logout"
+popup/item_0/id = 0
+popup/item_1/text = "Mute"
+popup/item_1/id = 2
+popup/item_2/text = "Exit"
+popup/item_2/id = 1
+script = ExtResource("1_j0hxn")
+
+[node name="EnemyRoot" type="Control" parent="UI"]
+layout_mode = 1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.42
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Enemy" type="Node2D" parent="UI/EnemyRoot"]
+visible = false
+position = Vector2(161, 102)
+script = ExtResource("3_ekmna")
+metadata/_edit_group_ = true
+
+[node name="HPdisplay" type="RichTextLabel" parent="UI/EnemyRoot"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -38.8
+offset_bottom = 1.20001
+grow_horizontal = 2
+grow_vertical = 0
+scroll_following = true
+
+[node name="Player" type="Node2D" parent="."]
+script = ExtResource("6_yuhiw")
+
+[node name="EventManager" type="Node2D" parent="."]
+script = ExtResource("7_hak32")
+
+[connection signal="timeout" from="UI/Progress/Timer" to="UI/Progress" method="_on_timer_timeout"]
