@@ -20,6 +20,7 @@ func _on_item_pressed(ID):
 	match(selected.to_lower()):
 		"potion of strength":
 			var amount = randi_range(3, 10)
-			$"../../../Player".heal(amount)
+			$"../../../../Player".heal(amount)
+			itemPopup.remove_item(ID)
 			
 	pass
