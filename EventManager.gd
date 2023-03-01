@@ -24,8 +24,19 @@ func update_log(text : String):
 			logdisplay.text = logdisplay.text.substr(logdisplay.text.find("\n") + 1)
 		pass
 
+var PrevTurnType : ETurnType
+
 func new_event():
-	end_turn(ETurnType.values().pick_random())
+	var newEventType = ETurnType.values().pick_random()
+	
+	if(PrevTurnType == ETurnType.Victory && newEventType == ETurnType.Combat):
+		newEventType = ETurnType.values().pick_random()
+		
+	while(newEventType == ETurnType.Victory || newEventType == ETurnType.Respawn):
+		newEventType = ETurnType.values().pick_random()
+	
+	end_turn(newEventType)
+	PrevTurnType = newEventType
 	pass
 
 enum ETurnType {
@@ -51,12 +62,12 @@ func end_turn(type : ETurnType):
 		ETurnType.Victory, ETurnType.Move1, ETurnType.Move2, ETurnType.Move3 :
 			MovePlayer()
 			CombatButtons.TravelMode()
+			
 		ETurnType.Respawn:
 			var player = $"/root/Scene/Player"
 			DespawnEnemy()
 			player.Respawn()
-			CombatButtons.TravelMode()	
-			pass
+			CombatButtons.TravelMode()
 
 # map
 #	- - T - -
